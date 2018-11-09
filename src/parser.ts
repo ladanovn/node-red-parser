@@ -25,8 +25,8 @@
 import { ParserRequest, ParserResponse } from "./classes/Parser";
 import { Types, Light, Device, NotFound } from "./classes/commands";
 
-import { parsers } from "./parsers/light";
-import { type } from "os";
+import { parsers as lightParsers } from "./parsers/light";
+import { parsers as deviceParsers } from "./parsers/device";
 
 function matchParsers(
   text
@@ -34,6 +34,7 @@ function matchParsers(
   type: Types;
   data: Light | Device | NotFound;
 } {
+  const parsers = [].concat(deviceParsers, lightParsers);
   for (let [index, parser] of parsers.entries()) {
     if (parser.matcher(text)) {
       return {

@@ -11,7 +11,7 @@ export const parsers: Array<{
    */
   {
     matcher: (text: string) => {
-      return text.search(/^Вкл[а-я]* свет (на|в) [а-я]+.?$/) !== -1;
+      return text.search(/^вкл[а-я]* свет (на|в) [а-я]+.?$/) !== -1;
     },
     value: (text: string) => {
       const where = text
@@ -34,7 +34,7 @@ export const parsers: Array<{
    */
   {
     matcher: (text: string) => {
-      return text.search(/^Выкл[а-я]* свет (на|в) [а-я]+.?$/) !== -1;
+      return text.search(/^выкл[а-я]* свет (на|в) [а-я]+.?$/) !== -1;
     },
     value: (text: string) => {
       const where = text
@@ -57,7 +57,7 @@ export const parsers: Array<{
    */
   {
     matcher: (text: string) => {
-      return text.search(/^Вкл[а-я]* свет.?$/i) !== -1;
+      return text.search(/^вкл[а-я]* свет.?$/i) !== -1;
     },
     value: (text: string) => {
       return {
@@ -75,7 +75,7 @@ export const parsers: Array<{
    */
   {
     matcher: (text: string) => {
-      return text.search(/^Выкл[а-я]* свет.?$/i) !== -1;
+      return text.search(/^выкл[а-я]* свет.?$/i) !== -1;
     },
     value: (text: string) => {
       return {
