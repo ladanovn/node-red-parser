@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "module": "commonjs",
+        "sourceMap": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+    },
+    "include": [
+        "src/*.ts",
+        "src/**/*.ts"
+    ]
+}
