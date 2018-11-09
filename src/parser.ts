@@ -1,7 +1,6 @@
 // включить свет на кухне
 
 /**
- * TODO:
  *  return {
  *      sender: {
  *          id: string,
