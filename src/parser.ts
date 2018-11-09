@@ -50,9 +50,7 @@ function matchParsers(
   }
 }
 
-export default async function parse(
-  req: ParserRequest
-): Promise<ParserResponse> {
+export async function parse(req: ParserRequest): Promise<ParserResponse> {
   const text = req.source_text.toLowerCase();
   const { type, data } = matchParsers(text);
   const response = {
@@ -68,6 +66,6 @@ export default async function parse(
     },
     cd: req.cd
   };
-
+  console.log(req);
   return response;
 }

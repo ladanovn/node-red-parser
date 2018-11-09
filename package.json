@@ -11,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "@types/body-parser": "^1.17.0",
+    "@types/natural": "^0.2.33",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "natural": "^0.6.2"
   },
   "devDependencies": {
     "@types/typescript": "^2.0.0",

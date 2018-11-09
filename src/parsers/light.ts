@@ -1,5 +1,6 @@
 import Light from "../classes/commands/Light";
 import { Types } from "../classes/commands";
+import { PorterStemmerRu } from "natural";
 
 export const parsers: Array<{
   matcher: (text: string) => boolean;
@@ -21,9 +22,9 @@ export const parsers: Array<{
 
       return {
         text,
-        command: "Включить",
+        command: "включить",
         target: "свет",
-        where: [where]
+        where: [PorterStemmerRu.stem(where)]
       };
     },
     type: Types.Light
@@ -44,9 +45,9 @@ export const parsers: Array<{
 
       return {
         text,
-        command: "Выключить",
+        command: "выключить",
         target: "свет",
-        where: [where]
+        where: [PorterStemmerRu.stem(where)]
       };
     },
     type: Types.Light
@@ -62,7 +63,7 @@ export const parsers: Array<{
     value: (text: string) => {
       return {
         text,
-        command: "Включить",
+        command: "включить",
         target: "свет",
         where: []
       };
@@ -80,7 +81,7 @@ export const parsers: Array<{
     value: (text: string) => {
       return {
         text,
-        command: "Выключить",
+        command: "выключить",
         target: "свет",
         where: []
       };
