@@ -1,5 +1,5 @@
-import Light from "../classes/commands/Light";
-import { Types } from "../classes/commands";
+import Light from "../interfaces/parser/Light";
+import { Types } from "../interfaces/CommandTypes";
 import { PorterStemmerRu } from "natural";
 
 export const parsers: Array<{

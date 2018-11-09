@@ -1,28 +1,6 @@
-// включить свет на кухне
-
-/**
- *  return {
- *      sender: {
- *          id: string,
- *          type: ('alisa', 'voice', 'text)
- *      }
- *      source_text: string
- *      type: string ('command')
- *      parser: {
- *          type: light
- *          data: {
- *          text: string
- *          command: string ('включить')
- *          target: string ('свет')
- *          where: string ('кухня', 'гостиная')
- *          }
- *      },
- *      cb: object
- *  }
- */
-
-import { ParserRequest, ParserResponse } from "./classes/Parser";
-import { Types, Light, Device, NotFound } from "./classes/commands";
+import { ParserRequest, ParserResponse } from "./interfaces/Parser";
+import { Light, Device, NotFound } from "./interfaces/parser/index";
+import { Types } from "./interfaces/CommandTypes";
 
 import { parsers as lightParsers } from "./parsers/light";
 import { parsers as deviceParsers } from "./parsers/device";

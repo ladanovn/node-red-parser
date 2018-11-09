@@ -1,8 +1,8 @@
-import { Types } from "./commands";
+import { Types } from "./CommandTypes";
 
-import Light from "./commands/Light";
-import Device from "./commands/Device";
-import NotFound from "./commands/NotFound";
+import Light from "./parser/Light";
+import Device from "./parser/Device";
+import NotFound from "./parser/NotFound";
 
 export interface ParserRequest {
   sender: {
