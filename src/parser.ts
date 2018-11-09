@@ -66,6 +66,5 @@ export async function parse(req: ParserRequest): Promise<ParserResponse> {
     },
     cd: req.cd
   };
-  console.log(req);
   return response;
 }
