@@ -1,17 +1,18 @@
-const server = require('./dist/server');
-const {
-    parse
-} = require('./dist/parser');
-
-const {
-    handle
-} = require('./dist/handler')
-
-
 module.exports = async function (RED) {
 
     function ParserNode(config) {
+        const brokerConnection = RED.nodes.getNode(config.broker);
+        process.env.BROKER = JSON.stringify(brokerConnection);
         process.env.PARSER_CONFIG = JSON.stringify(config);
+
+        const server = require('./dist/server');
+        const {
+            parse
+        } = require('./dist/parser');
+        const {
+            handle
+        } = require('./dist/handler')
+
         RED.nodes.createNode(this, config);
 
         const node = this;

@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mqtt = require("mqtt");
 const client = mqtt.connect({
-    host: "m12.cloudmqtt.com",
-    port: 11010,
-    username: "olcetaiv",
-    password: "wvBDfj4Qb8gH"
+    host: JSON.parse(process.env.BROKER).broker,
+    port: JSON.parse(process.env.BROKER).port,
+    username: JSON.parse(process.env.BROKER).credentials.user,
+    password: JSON.parse(process.env.BROKER).credentials.password
 });
 exports.client = client;
 client.on("connect", () => {
