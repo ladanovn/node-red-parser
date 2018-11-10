@@ -41,8 +41,7 @@ export async function parse(req: ParserRequest): Promise<ParserResponse> {
     parser: {
       type,
       data
-    },
-    cd: req.cd
+    }
   };
   return response;
 }

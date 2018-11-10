@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const { parse } = require("./parser");
+const { handle } = require("./handler");
 
 app.use(
   bodyParser.urlencoded({
@@ -13,7 +14,8 @@ app.use(
 app.use(bodyParser.json());
 
 app.post("/", async (req, res) => {
-  const result = await parse(req.body);
+  let result = await parse(req.body);
+  result = await handle(result);
   res.send(result);
 });
 const httpServer = require("http").createServer(app);

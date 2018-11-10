@@ -11,7 +11,7 @@ export interface ParserRequest {
   };
   source_text: string;
   type?: string;
-  cd?: object;
+  cb?: object;
 }
 
 export interface ParserResponse {
@@ -25,5 +25,5 @@ export interface ParserResponse {
     type: Types;
     data: Light | Device | NotFound;
   };
-  cd?: object;
+  cb?: object;
 }

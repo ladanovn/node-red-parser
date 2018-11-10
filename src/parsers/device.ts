@@ -1,5 +1,5 @@
-import Device from "../classes/commands/Device";
-import { Types } from "../classes/commands";
+import Device from "../interfaces/parser/Device";
+import { Types } from "../interfaces/CommandTypes";
 
 export const parsers: Array<{
   matcher: (text: string) => boolean;
@@ -16,8 +16,8 @@ export const parsers: Array<{
     value: (text: string) => {
       return {
         text,
-        command: "Показать",
-        target: "Устройство"
+        command: "показать",
+        target: "устройства"
       };
     },
     type: Types.Device

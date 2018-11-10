@@ -10,11 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@types/body-parser": "^1.17.0",
+    "@types/mqtt": "^2.5.0",
     "@types/natural": "^0.2.33",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "http": "0.0.0",
+    "mqtt": "^2.18.8",
     "natural": "^0.6.2"
   },
   "devDependencies": {
