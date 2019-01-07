@@ -11,12 +11,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const light_1 = require("./handlers/light");
 const device_1 = require("./handlers/device");
 const notFound_1 = require("./handlers/notFound");
-function handle(req) {
+const sonoff_1 = require("./drivers/sonoff");
+function handle(req, nodes) {
     return __awaiter(this, void 0, void 0, function* () {
         const handlers = [].concat(light_1.handlers, device_1.handlers, notFound_1.handlers);
         for (let handler of handlers) {
             if (handler.type === req.parser.type) {
-                return yield handler.handler(req);
+                return yield handler.handler(req, sonoff_1.parseNodes(nodes));
             }
         }
     });

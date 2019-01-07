@@ -1,6 +1,6 @@
 export default interface Device {
   devices: Array<{
-    id: number;
+    id: string;
     type?: string;
     name?: string;
     status?: string;

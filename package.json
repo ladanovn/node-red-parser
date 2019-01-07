@@ -12,8 +12,10 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/body-parser": "^1.17.0",
+    "@types/express": "^4.16.0",
     "@types/mqtt": "^2.5.0",
     "@types/natural": "^0.2.33",
+    "@types/node-red": "^0.17.3",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",

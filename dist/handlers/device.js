@@ -8,26 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = require("axios");
 exports.handlers = [
     {
         type: 1 /* Device */,
-        handler: (req) => __awaiter(this, void 0, void 0, function* () {
-            const { server_host, server_port } = JSON.parse(process.env.PARSER_CONFIG);
-            const devices = [];
+        handler: (req, nodes) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const devicesRes = yield axios_1.default.get(`http://${server_host}:${server_port}/api/v1/devices`);
-                for (let device of devicesRes.data) {
-                    devices.push({
-                        id: device._id,
-                        type: device.type,
-                        name: device.name,
-                        where: device.where
-                    });
-                }
                 const response = Object.assign({}, req);
                 response.handler = {
-                    devices: devices
+                    devices: nodes
                 };
                 return response;
             }

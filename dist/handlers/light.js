@@ -8,30 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = require("axios");
 const mqtt_1 = require("../lib/mqtt");
 const natural_1 = require("natural");
 exports.handlers = [
     {
         type: 0 /* Light */,
-        handler: (req) => __awaiter(this, void 0, void 0, function* () {
-            const { server_host, server_port } = JSON.parse(process.env.PARSER_CONFIG);
-            const devices = [];
+        handler: (req, nodes) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const devicesRes = yield axios_1.default.get(`http://${server_host}:${server_port}/api/v1/devices`);
-                for (let device of devicesRes.data) {
+                const devices = [];
+                for (let device of nodes) {
                     if (device.type === "light") {
                         if ((req.parser.data.where.length > 0 &&
-                            req.parser.data.where.includes(natural_1.PorterStemmerRu.stem(device.where))) ||
+                            req.parser.data.where.includes(natural_1.PorterStemmerRu.stem(device.where[0]))) ||
                             req.parser.data.where.length === 0) {
                             mqtt_1.client.publish("/alisa", JSON.stringify({
-                                deviceId: device._id,
+                                deviceId: device.id,
                                 turn: req.parser.data.command === "включить"
                                     ? "on"
                                     : "off"
                             }));
                             devices.push({
-                                id: device._id,
+                                id: device.id,
                                 type: device.type,
                                 name: device.name,
                                 where: device.where

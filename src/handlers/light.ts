@@ -5,35 +5,30 @@ import ParserLight from "../interfaces/parser/Light";
 import HandlerLight from "../interfaces/handler/Light";
 import { client } from "../lib/mqtt";
 import { PorterStemmerRu } from "natural";
+import { SonoffNodeInterface } from '../drivers/sonoff';
 
 export const handlers: Array<{
   type: Types;
-  handler(HandlerRequest): Promise<HandlerResponse>;
+  handler(HandlerRequest, nodes: SonoffNodeInterface[]): Promise<HandlerResponse>;
 }> = [
   {
     type: Types.Light,
-    handler: async (req: HandlerRequest): Promise<HandlerResponse> => {
-      const { server_host, server_port } = JSON.parse(
-        process.env.PARSER_CONFIG
-      );
-      const devices = [];
+    handler: async (req: HandlerRequest, nodes: SonoffNodeInterface[]): Promise<HandlerResponse> => {
       try {
-        const devicesRes = await axois.get(
-          `http://${server_host}:${server_port}/api/v1/devices`
-        );
-        for (let device of devicesRes.data) {
+        const devices = [];
+        for (let device of nodes) {
           if (device.type === "light") {
             if (
               ((<ParserLight>req.parser.data).where.length > 0 &&
                 (<ParserLight>req.parser.data).where.includes(
-                  PorterStemmerRu.stem(device.where)
+                  PorterStemmerRu.stem(device.where[0])
                 )) ||
               (<ParserLight>req.parser.data).where.length === 0
             ) {
               client.publish(
                 "/alisa",
                 JSON.stringify({
-                  deviceId: device._id,
+                  deviceId: device.id,
                   turn:
                     (<ParserLight>req.parser.data).command === "включить"
                       ? "on"
@@ -41,7 +36,7 @@ export const handlers: Array<{
                 })
               );
               devices.push({
-                id: device._id,
+                id: device.id,
                 type: device.type,
                 name: device.name,
                 where: device.where

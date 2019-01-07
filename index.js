@@ -2,30 +2,22 @@ module.exports = async function (RED) {
 
     function ParserNode(config) {
         const brokerConnection = RED.nodes.getNode(config.broker);
-        process.env.BROKER = JSON.stringify(brokerConnection);
+        process.env.BROKER = JSON.stringify({
+            host: brokerConnection.host,
+            port: brokerConnection.port,
+            credentials: {
+                user: brokerConnection.credentials.user,
+                password: brokerConnection.credentials.password
+            } 
+        });
         process.env.PARSER_CONFIG = JSON.stringify(config);
-
-        const server = require('./dist/server');
-        const {
-            parse
-        } = require('./dist/parser');
-        const {
-            handle
-        } = require('./dist/handler')
-
         RED.nodes.createNode(this, config);
 
         const node = this;
         const nodeContext = node.context();
-
-        server.close()
-        server.listen(config.port)
-
-        node.on('input', async (msg) => {
-            msg.payload = await parse(msg.payload);
-            msg.payload = await handle(msg.payload)
-            node.send(msg);
-        })
+        const ReqHandler = require('./dist/ReqHandler');
+        const reqHandler = new ReqHandler(RED, node);
+        reqHandler.listenServer(config.port);
     }
 
     RED.nodes.registerType("Parser", ParserNode);
