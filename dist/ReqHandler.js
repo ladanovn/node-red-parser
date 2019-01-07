@@ -22,8 +22,14 @@ module.exports = class ReqHandler {
         this.initCurrNode();
     }
     listenServer(config) {
-        this.server.close();
-        this.server.listen(config);
+        return __awaiter(this, void 0, void 0, function* () {
+            this.server.listen(config);
+        });
+    }
+    closeServer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.server.close((err) => console.log(err));
+        });
     }
     handleReq(msg) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -46,22 +52,27 @@ module.exports = class ReqHandler {
         return nodeInfoArray;
     }
     initServer() {
-        const app = express();
-        app.use(bodyParser.urlencoded({
-            extended: false
-        }));
-        app.use(bodyParser.json());
-        app.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.app = express();
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            if (!req.body)
+                return res.sendStatus(400);
             const result = yield this.handleReq(req.body);
             res.send(result);
         }));
-        this.server = http.createServer(app);
+        this.server = http.createServer(this.app);
     }
     initCurrNode() {
         this.currNode.on('input', (msg) => __awaiter(this, void 0, void 0, function* () {
             msg.payload = yield this.handleReq(msg.payload);
             this.currNode.send(msg);
         }));
+        this.currNode.close = function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                yield this.closeServer();
+            });
+        }.bind(this);
     }
 };
 //# sourceMappingURL=ReqHandler.js.map

@@ -12,7 +12,7 @@ module.exports = async function (RED) {
         });
         process.env.PARSER_CONFIG = JSON.stringify(config);
         RED.nodes.createNode(this, config);
-
+        
         const node = this;
         const nodeContext = node.context();
         const ReqHandler = require('./dist/ReqHandler');

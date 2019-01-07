@@ -10,14 +10,6 @@
                 value: 3001,
                 required: true
             },
-            server_host: {
-                value: 'localhost',
-                required: true
-            },
-            server_port: {
-                value: 9000,
-                required: true
-            },
             broker: {
                 type: 'mqtt-broker',
                 required: true
@@ -41,14 +33,6 @@
     <label for="node-input-port">Node port</label>
     <input type="text" id="node-input-port" placeholder="3001">
   </div>
-  <div class="form-row">
-      <label for="node-input-server_host">Server host</label>
-      <input type="text" id="node-input-server_host" placeholder="localhost">
-  </div>
-<div class="form-row">
-    <label for="node-input-server_port">Server port</label>
-    <input type="text" id="node-input-server_host" placeholder="9000">
-</div>
   <div class="form-row">
     <label for="node-input-broker"><i class="fa fa-globe"></i> Mqtt broker</label>
     <input type="text" id="node-input-broker">

@@ -13,6 +13,7 @@ module.exports = class ReqHandler {
     RED: Red;
     currNode: Node;
     server: Server;
+    app: express.Application
 
     constructor (RED, currNode) {
         this.RED = RED;
@@ -21,10 +22,13 @@ module.exports = class ReqHandler {
         this.initCurrNode();
     }
 
-    listenServer(config: Object) {
-        this.server.close();
+    async listenServer(config: Object) {
         this.server.listen(config);
     }    
+
+    async closeServer() {
+        await this.server.close((err)=> console.log(err));
+    }
 
     private async handleReq (msg) {
         let result = await parse(msg);
@@ -52,20 +56,18 @@ module.exports = class ReqHandler {
     }
 
     private initServer() {
-        const app = express();
-        app.use(
-            bodyParser.urlencoded({
-                extended: false
-            })
-        );
-        app.use(bodyParser.json());
+        this.app = express();
 
-        app.post("/", async (req, res) => {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+
+        this.app.post("/", async (req, res) => {
+            if (!req.body) return res.sendStatus(400);
             const result = await this.handleReq(req.body);
             res.send(result);
         });
-
-        this.server = http.createServer(app);
+        
+        this.server = http.createServer(this.app);
     }
 
     private initCurrNode() {
@@ -73,6 +75,10 @@ module.exports = class ReqHandler {
             msg.payload = await this.handleReq(msg.payload);
             this.currNode.send(msg);
         });
+
+        this.currNode.close = async function(){
+            await this.closeServer();
+        }.bind(this);
     }
     
 }
